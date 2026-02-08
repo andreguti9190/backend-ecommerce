@@ -9,19 +9,16 @@ const conn = await mysql.createConnection({
 })
 
 export const createUser= async (email,username,password)=>{
-    conn.query("INSERT INTO users(email,username,passwordUser) value (?,?,?)",[email,username,password])
-    .then((row)=>{ return row; })
-    .catch((err)=>{ return err})
+    let data = await conn.query("INSERT INTO users(email,username,passwordUser) value (?,?,?)",[email,username,password]);
+    return data;
 }
 
 export const loginUserEmail= async (email,password)=>{
-    conn.query("SELECT * FROM users WHERE email=? and passwordUser=?",[email,password])
-    .then((row)=>{ return row})
-    .catch((err)=>{ return err })
+   let data = await conn.query("SELECT * FROM users WHERE email=? and passwordUser=?",[email,password]);
+   return data;
 }
 
 export const loginUserUsername= async (username,password)=>{
-    conn.query("SELECT * FROM users WHERE username=? and passwordUser=?",[username,password])
-    .then((row)=>{ return row})
-    .catch((err)=>{ return err })
+    let data = await conn.query("SELECT * FROM users WHERE username=? and passwordUser=?",[username,password]);
+    return data;
 }
