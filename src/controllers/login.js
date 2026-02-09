@@ -1,4 +1,4 @@
-import { loginUserEmail, loginUserUsername} from "../model/database.js"
+import { loginUserEmailDB, loginUserUsernameDB} from "../model/database.js"
 
 export const login = async (req,res)=> {
     let {username,email,password} = req.body;
@@ -7,8 +7,8 @@ export const login = async (req,res)=> {
     
     try {
         let data = null;
-        if(username) data = await loginUserUsername(username,password)
-        else if(email) data = await loginUserEmail(email,password)
+        if(username) data = await loginUserUsernameDB(username,password)
+        else if(email) data = await loginUserEmailDB(email,password)
 
         return res.status(200).send(data);
     } catch (error) {
