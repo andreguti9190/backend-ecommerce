@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000
 //middelware
 app.use(express.json());
 app.use(cookieParser())
+app.use(express.urlencoded({extended:true}))
 app.use(cors())
 
 //routes
