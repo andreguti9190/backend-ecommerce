@@ -1,4 +1,4 @@
-import { loginUserDB } from "../../model/database.js";
+import { getUserDB } from "../../model/database.js";
 import { userValidation } from "../validation/user.js";
 import jwt from "jsonwebtoken";
 import config from "../../config.js";
@@ -13,7 +13,7 @@ export const login = async (req, res) => {
     const valid = await userValidation(email, username, password)
     if (valid.error) return res.status(400).json({ error: valid.msg })
 
-    let user = await loginUserDB(email, username)
+    let user = await getUserDB(email, username)
     if (typeof user === "undefined") return res.status(401).json({error:"user or email no exist"})
     if(user.password != password ) return res.status(401).json({error:"access unauthorized"})
     

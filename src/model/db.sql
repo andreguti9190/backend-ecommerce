@@ -1,7 +1,7 @@
 CREATE TABLE users(
 	userID int8 auto_increment PRIMARY KEY,
-    username varchar(100) NOT NULL UNIQUE,
-    email varchar(255) NOT NULL UNIQUE,
+    username varchar(100) UNIQUE,
+    email varchar(255) UNIQUE,
     passwordUser varchar(255) NOT NULL 
 );
 CREATE TABLE orden(
