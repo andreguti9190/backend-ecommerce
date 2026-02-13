@@ -13,6 +13,13 @@ export const createCategoryDB = async (category) => {
     return true
 }
 
+export const getCategory = async (name) => {
+    let data;
+    if(!name) data = await conn.query("SELECT categoryID as id,category FROM category")
+    else data = await conn.query("SELECT categoryID as id,category FROM category WHERE category=?",[name])
+    return data[0]
+}
+
 export const registerUserDB = async (id, email, username, password) => {
     if (typeof email != "undefined") {
         await conn.query("INSERT INTO users(userID,email,passwordUser) values(UUID_TO_BIN(?),?,?)",

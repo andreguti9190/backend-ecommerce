@@ -17,6 +17,7 @@ router.post("/product", auth, createProduct)
 
 router.post("/category",category.create)
 
+router.get("/category",category.get)
 
 
 export default router;
