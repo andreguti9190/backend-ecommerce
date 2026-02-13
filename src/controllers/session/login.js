@@ -1,5 +1,6 @@
 import { getUserDB } from "../../model/database.js";
 import { userValidation } from "../validation/user.js";
+import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 import config from "../../config.js";
 
@@ -14,8 +15,10 @@ export const login = async (req, res) => {
     if (valid.error) return res.status(400).json({ error: valid.msg })
 
     let user = await getUserDB(email, username)
+    let passwordValid = bcrypt.compare(password,user.password);
     if (typeof user === "undefined") return res.status(401).json({error:"user or email no exist"})
-    if(user.password != password ) return res.status(401).json({error:"access unauthorized"})
+    if(!passwordValid) return res.status(401).json({error:"access unauthorized"})
+    
     
     let token = jwt.sign({id:user.id},config.JWT_SECRET,{
         expiresIn:"1h"
