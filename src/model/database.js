@@ -8,15 +8,20 @@ const conn = await mysql.createConnection({
     database: "ecommercedb"
 })
 
-export const registerUserDB = async (id,email, username, password)=>{
+export const createCategoryDB = async (category) => {
+    await conn.query("INSERT INTO category(category) VALUES(?)", category)
+    return true
+}
+
+export const registerUserDB = async (id, email, username, password) => {
     if (typeof email != "undefined") {
         await conn.query("INSERT INTO users(userID,email,passwordUser) values(UUID_TO_BIN(?),?,?)",
-            [id,email,password]);
+            [id, email, password]);
     } else if (typeof username != "undefined") {
         await conn.query("INSERT INTO users(userID,username,passwordUser) values(UUID_TO_BIN(?),?,?)",
-            [id,username,password]);
+            [id, username, password]);
     }
-    let data = await getUserDB(email,username);
+    let data = await getUserDB(email, username);
     return data;
 }
 export const getIdDB = async () => {
