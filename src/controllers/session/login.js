@@ -15,8 +15,8 @@ export const login = async (req, res) => {
     if (valid.error) return res.status(400).json({ error: valid.msg })
 
     let user = await getUserDB(email, username)
+    if (typeof user.id === "undefined") return res.status(401).json({error:"user or email no exist"})
     let passwordValid = bcrypt.compare(password,user.password);
-    if (typeof user === "undefined") return res.status(401).json({error:"user or email no exist"})
     if(!passwordValid) return res.status(401).json({error:"access unauthorized"})
     
     

@@ -7,19 +7,12 @@ const conn = await mysql.createConnection({
     password: "admin",
     database: "ecommercedb"
 })
-
-export const createCategoryDB = async (category) => {
-    await conn.query("INSERT INTO category(category) VALUES(?)", category)
-    return true
+//obtengo un uuid
+export const getIdDB = async () => {
+    let id = await conn.query("SELECT UUID() as id")
+    return id[0][0].id
 }
-
-export const getCategory = async (name) => {
-    let data;
-    if(!name) data = await conn.query("SELECT categoryID as id,category FROM category")
-    else data = await conn.query("SELECT categoryID as id,category FROM category WHERE category=?",[name])
-    return data[0]
-}
-
+// registra al usuario con email o username
 export const registerUserDB = async (id, email, username, password) => {
     if (typeof email != "undefined") {
         await conn.query("INSERT INTO users(userID,email,passwordUser) values(UUID_TO_BIN(?),?,?)",
@@ -31,11 +24,7 @@ export const registerUserDB = async (id, email, username, password) => {
     let data = await getUserDB(email, username);
     return data;
 }
-export const getIdDB = async () => {
-    let id = await conn.query("SELECT UUID() as id")
-    return id[0][0].id
-}
-
+// consigue al usuario
 export const getUserDB = async (email, username) => {
     let data;
     if (typeof email != "undefined") {
@@ -45,4 +34,16 @@ export const getUserDB = async (email, username) => {
     }
     if (typeof data[0][0] == "undefined") return { id: undefined, email: undefined, username: undefined, password: undefined }
     return data[0][0];
+}
+
+export const createCategoryDB = async (category) => {
+    await conn.query("INSERT INTO category(category) VALUES(?)", category)
+    return true
+}
+
+export const getCategory = async (name) => {
+    let data;
+    if(!name) data = await conn.query("SELECT categoryID as id,category FROM category")
+    else data = await conn.query("SELECT categoryID as id,category FROM category WHERE category=?",[name])
+    return data[0]
 }
