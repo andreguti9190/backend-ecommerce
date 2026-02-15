@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-const conn = await mysql.createConnection({
+export const conn = await mysql.createConnection({
     host: "localhost",
     user: "root",
     port: 3306,
@@ -45,5 +45,14 @@ export const getCategory = async (name) => {
     let data;
     if(!name) data = await conn.query("SELECT categoryID as id,category FROM category")
     else data = await conn.query("SELECT categoryID as id,category FROM category WHERE category=?",[name])
+    return data[0]
+}
+
+export const createProductDB = async (id,name,category,price,quantifiers) => {
+    await conn.query("INSERT INTO product(productID,productName,category,price,quantifiers) VALUES (UUID_TO_BIN(?),?,?,?,?)",[id,name,category,price,quantifiers])
+    return true
+}
+export const getProductDB = async (name) => {
+    let data = await conn.query("SELECT productName FROM product WHERE productName=?",[name])
     return data[0]
 }
