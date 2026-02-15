@@ -53,6 +53,8 @@ export const createProductDB = async (id,name,category,price,quantifiers) => {
     return true
 }
 export const getProductDB = async (name) => {
-    let data = await conn.query("SELECT productName FROM product WHERE productName=?",[name])
+    let data
+    if(!name) data = await conn.query("SELECT BIN_TO_UUID(productID) as id,productName as name,category,quantifiers,price FROM product")
+    else data = await conn.query("SELECT productName FROM product WHERE productName=?",[name])
     return data[0]
 }

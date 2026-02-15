@@ -13,10 +13,12 @@ router.post("/signup", signup);
 
 router.post("/logout", logout);
 
-router.post("/category",category.create)
+router.post("/category", category.create)
 
-router.get("/category",category.get)
+router.get("/category", category.get)
 
 router.post("/product", auth, product.create)
+
+router.get("/product", auth, product.get)
 
 export default router;

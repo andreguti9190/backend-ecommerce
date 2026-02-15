@@ -19,13 +19,18 @@ const create = async (req, res) => {
     category = categoryValid[0].id;
 
     let productExist = await getProductDB(name)
-    if(productExist.length!=0) return res.status(400).json({error:"product exist"})
+    if (productExist.length != 0) return res.status(400).json({ error: "product exist" })
 
     let product = await createProductDB(id, name, category, price, quantifiers)
     if (!product) return res.status(500).json({ error: "database error" })
     return res.status(200).json({ create: true })
 }
+const get = async (req, res) => {
+    let productList =  await getProductDB()
+    return res.status(200).json({productList:productList});
+}
 
 export default {
-    create
+    create,
+    get
 }
