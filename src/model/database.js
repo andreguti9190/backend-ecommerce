@@ -28,9 +28,9 @@ export const registerUserDB = async (id, email, username, password) => {
 export const getUserDB = async (email, username) => {
     let data;
     if (typeof email != "undefined") {
-        data = await conn.query("SELECT BIN_TO_UUID(userID) as id,email,username,passwordUser as password FROM users WHERE email=?", email);
+        data = await conn.query("SELECT BIN_TO_UUID(userID) as id,email,username,passwordUser as password,adminUser as admin  FROM users WHERE email=?", email);
     } else if (typeof username != "undefined") {
-        data = await conn.query("SELECT BIN_TO_UUID(userID) as id,email,username,passwordUser as password FROM users WHERE username=?", username);
+        data = await conn.query("SELECT BIN_TO_UUID(userID) as id,email,username,passwordUser as password , adminUser as admin FROM users WHERE username=?", username);
     }
     if (typeof data[0][0] == "undefined") return { id: undefined, email: undefined, username: undefined, password: undefined }
     return data[0][0];

@@ -28,5 +28,5 @@ export const signup = async (req, res) => {
     res.cookie("token", token, {
         httpOnly: true,
         expiresIn: 60 * 60
-    }).status(200).json({ create: true })
+    }).status(200).json({ logged: true })
 }

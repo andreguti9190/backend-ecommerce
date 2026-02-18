@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { login } from "../controllers/session/login.js";
-import { signup } from "../controllers/session/signup.js"
-import { logout } from "../controllers/session/logout.js"
 import { auth } from "../controllers/validation/auth.js";
+import { login } from "../controllers/Auth/login.js";
+import { signup } from "../controllers/Auth/signup.js"
+import { logout } from "../controllers/Auth/logout.js"
 import product from "../controllers/product/product.js"
 import category from "../controllers/product/category.js";
 const router = Router();
@@ -17,8 +17,8 @@ router.post("/category", category.create)
 
 router.get("/category", category.get)
 
-router.post("/product", auth, product.create)
-
 router.get("/product", product.get)
+
+router.post("/product", auth, product.create)
 
 export default router;
